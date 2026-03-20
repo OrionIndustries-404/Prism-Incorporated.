@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IXL | Math, Language Arts, Science, Social Studies, and Spanish</title>
+        <link rel="icon" href="ixl.ico">
+        <link href="https://fonts.googleapis.com/css2?family=Datatype&display=swap" rel="stylesheet">
+        <style>
+            body {
+                height: 100vh;
+                margin: 0;
+                background-color: #000;
+                background-image: 
+                    linear-gradient(var(--theme-grid, rgba(255,255,255,0.1)) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--theme-grid, rgba(255,255,255,0.1)) 1px, transparent 1px);
+                background-size: 50px 50px;
+                padding-top: 80px; /* Space for top bar */
+            }
+
+            /* Top Navigation Bar */
+            .top-bar {
+                position: fixed;
+                top: 32px;
+                left: 50%;
+                transform: translateX(-50%);
+                min-width: 420px;
+                width: max-content;
+                max-width: 90vw;
+                padding: 0 48px;
+                height: 72px;
+                background-color: rgba(0, 0, 0, 0.85);
+                border-radius: 18px;
+                box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+                border: 2.5px solid var(--theme-border, #fff);
+            }
+
+            .top-bar a {
+                color: white;
+                text-decoration: none;
+                padding: 10px 20px;
+                margin: 0 10px;
+                border: 2px solid var(--theme-border, #fff);
+                border-radius: 10px;
+                font-family: 'Datatype', sans-serif;
+                font-size: 16px;
+                transition: all 0.3s ease;
+            }
+
+            .top-bar a:hover {
+                background-color: var(--theme-border, #fff);
+                color: #000;
+            }
+
+            /* Main content area */
+            .content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: calc(100vh - 80px);
+            }
+            h1 {
+                font-family: 'Datatype', sans-serif;
+                color: white;
+                font-size: 60px;
+                margin: 0 0 30px 0;
+            }
+            button {
+                padding: 12px 30px;
+                font-size: 18px;
+                background-color: black;
+                color: white;
+                border: 2px solid var(--theme-border, #fff);
+                border-radius: 5px;
+                cursor: pointer;
+                font-family: 'Datatype', sans-serif;
+                text-decoration: none;
+                display: inline-block;
+            }
+            button:hover {
+                background-color: var(--theme-border, #fff);
+                border: 2px solid #000;
+                color: #000;
+            }
+            a.button {
+                padding: 12px 30px;
+                font-size: 18px;
+                background-color: black;
+                color: white;
+                border: 2px solid var(--theme-border, #fff);
+                border-radius: 5px;
+                cursor: pointer;
+                font-family: 'Datatype', sans-serif;
+                text-decoration: none;
+                display: inline-block;
+            }
+            a.button:hover {
+                background-color: var(--theme-border, #fff);
+                border: 2px solid #000;
+                color: #000;
+            }
+        </style>
+        <script>
+            (function() {
+                const color = localStorage.getItem('themeColor') || '#fff';
+                document.documentElement.style.setProperty('--theme-grid', color === '#000000' ? 'rgba(255,255,255,0.1)' : color+'33');
+                document.documentElement.style.setProperty('--theme-border', color);
+            })();
+            // Inject music player logic (shared across all pages)
+            (function() {
+                if (window.hasMusicPlayer) return;
+                window.hasMusicPlayer = true;
+                let audio = null;
+                function playMusic() {
+                    const enabled = localStorage.getItem('bgMusicEnabled') === 'true';
+                    const track = localStorage.getItem('bgMusicTrack') || 'PulseBox - Jazz Walk.mp3';
+                    const volume = parseFloat(localStorage.getItem('bgMusicVolume') || '0.5');
+                    if (!enabled) {
+                        if (audio) { audio.pause(); audio.currentTime = 0; }
+                        return;
+                    }
+                    if (!audio) {
+                        audio = new Audio(track);
+                        audio.loop = true;
+                    } else if (audio.src.indexOf(track) === -1) {
+                        audio.src = track;
+                    }
+                    audio.volume = volume;
+                    audio.loop = true;
+                    audio.play().catch(()=>{});
+                }
+                window.addEventListener('bgMusicSettingsChanged', playMusic);
+                window.addEventListener('storage', playMusic);
+                document.addEventListener('visibilitychange', function() {
+                    if (!document.hidden) playMusic();
+                });
+                playMusic();
+            })();
+        </script>
+    </head>
+    <body>
+        <div class="top-bar">
+            <a href="index.html">Home</a>
+            <a href="games.html">Games</a>
+            <a href="apps.html">Apps</a>
+            <a href="settings.html">Settings</a>
+        </div>
+        <div class="content">
+            <iframe src="ab.html" width="960" height="600" title="AngryBirds"></iframe>
+        </div>
+    </body>
+</html>

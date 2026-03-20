@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Settings - Prism Incorporated</title>
+        <link rel="icon" href="ixl.ico">
+        <link href="https://fonts.googleapis.com/css2?family=Datatype&display=swap" rel="stylesheet">
+        <style>
+            body {
+                height: 100vh;
+                margin: 0;
+                background-color: #000;
+                background-image: 
+                    linear-gradient(var(--theme-grid, rgba(255,255,255,0.1)) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--theme-grid, rgba(255,255,255,0.1)) 1px, transparent 1px);
+                background-size: 50px 50px;
+                padding-top: 120px;
+            }
+
+            .top-bar {
+                position: fixed;
+                top: 32px;
+                left: 50%;
+                transform: translateX(-50%);
+                min-width: 420px;
+                width: max-content;
+                max-width: 90vw;
+                padding: 0 48px;
+                height: 72px;
+                background-color: var(--theme-nav, rgba(0,0,0,0.85));
+                border-radius: 18px;
+                box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+                border: 2.5px solid var(--theme-border, #fff);
+            }
+
+            .top-bar a {
+                color: white;
+                text-decoration: none;
+                padding: 10px 20px;
+                margin: 0 10px;
+                border: 2px solid var(--theme-border, #fff);
+                border-radius: 12px;
+                font-family: 'Datatype', sans-serif;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                background: transparent;
+            }
+
+            .top-bar a:hover {
+                background-color: var(--theme-border, #fff);
+                color: var(--theme-nav, #000);
+            }
+
+            .content {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: calc(100vh - 80px);
+            }
+
+            h1 {
+                color: white;
+                font-family: 'Datatype', sans-serif;
+                font-size: 48px;
+            }
+        </style>
+        <script>
+            (function() {
+                const color = localStorage.getItem('themeColor') || '#fff';
+                document.documentElement.style.setProperty('--theme-grid', color === '#000000' ? 'rgba(255,255,255,0.1)' : color+'33');
+                document.documentElement.style.setProperty('--theme-border', color);
+            })();
+        </script>
+    </head>
+    <body>
+        <div class="top-bar">
+            <a href="index.html">Home</a>
+            <a href="games.html">Games</a>
+            <a href="apps.html">Apps</a>
+            <a href="settings.html">Settings</a>
+        </div>
+        <div class="content">
+            <h1>Settings Page</h1>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 32px; margin-top: 40px;">
+                <button id="openBlankBtn" style="padding: 12px 24px; font-size: 18px; border-radius: 8px; border: 2px solid white; background: rgba(0,0,0,0.7); color: white; cursor: pointer;">Open This Page in about:blank</button>
+                <div style="margin-top: 16px;">
+                    <label for="themeSelect" style="color: white; font-size: 18px; font-family: 'Datatype', sans-serif;">Theme:</label>
+                    <select id="themeSelect" style="margin-left: 12px; font-size: 18px; border-radius: 8px; padding: 6px 16px;">
+                        <option value="#000000">Default (Black)</option>
+                        <option value="#ff0000">Red</option>
+                        <option value="#ff7f00">Orange</option>
+                        <option value="#ffff00">Yellow</option>
+                        <option value="#00ff00">Green</option>
+                        <option value="#0000ff">Blue</option>
+                        <option value="#4b0082">Indigo</option>
+                        <option value="#8f00ff">Violet</option>
+                        <option value="#ffffff">White</option>
+                        <option value="#00ffff">Cyan</option>
+                        <option value="#ff69b4">Pink</option>
+                        <option value="#a52a2a">Brown</option>
+                        <option value="#808080">Gray</option>
+                    </select>
+                </div>
+                <div style="margin-top: 16px; color: white; font-family: 'Datatype', sans-serif; font-size: 18px;">
+                    <label for="musicSelect">Background Music:</label>
+                    <select id="musicSelect" style="margin-left: 12px; font-size: 18px; border-radius: 8px; padding: 6px 16px;">
+                        <option value="PulseBox - Jazz Walk.mp3">Jazz Walk</option>
+                        <option value="PulseBox - Piano Jazz.mp3">Piano Jazz</option>
+                        <option value="PulseBox - Slow Jazz.mp3">Slow Jazz</option>
+                        <option value="PulseBox - Smooth Jazz.mp3">Smooth Jazz</option>
+                    </select>
+                    <label style="margin-left: 24px;">Enable:</label>
+                    <input type="checkbox" id="musicToggle" style="transform: scale(1.5); margin-left: 8px; vertical-align: middle;">
+                    <label for="musicVolume" style="margin-left: 24px;">Volume:</label>
+                    <input type="range" id="musicVolume" min="0" max="1" step="0.01" style="vertical-align: middle; width: 120px; margin-left: 8px;">
+                </div>
+            </div>
+            <input type="text" value="femboy lol" readonly style="position: fixed; bottom: 8px; right: 8px; width: 80px; height: 16px; font-size: 10px; border-radius: 6px; border: 1px solid #aaa; background: #222; color: #fff; text-align: center; opacity: 0.7; z-index: 2000; pointer-events: none;" />
+        </div>
+        <script>
+            // Open in about:blank
+            document.getElementById('openBlankBtn').onclick = function() {
+                const html = document.documentElement.outerHTML;
+                const win = window.open('about:blank', '_blank');
+                win.document.open();
+                win.document.write(html);
+                win.document.close();
+            };
+            // Theme dropdown
+            const themeSelect = document.getElementById('themeSelect');
+            const setTheme = color => {
+                localStorage.setItem('themeColor', color);
+                location.reload();
+            };
+            themeSelect.onchange = e => setTheme(e.target.value);
+            // Load saved theme
+            const saved = localStorage.getItem('themeColor');
+            if (saved) {
+                themeSelect.value = saved;
+            }
+
+            // Music controls
+            const musicSelect = document.getElementById('musicSelect');
+            const musicToggle = document.getElementById('musicToggle');
+            const musicVolume = document.getElementById('musicVolume');
+
+            // Load saved music settings
+            const savedTrack = localStorage.getItem('bgMusicTrack') || 'PulseBox - Jazz Walk.mp3';
+            const savedEnabled = localStorage.getItem('bgMusicEnabled') === 'true';
+            const savedVolume = localStorage.getItem('bgMusicVolume') || '0.5';
+            musicSelect.value = savedTrack;
+            musicToggle.checked = savedEnabled;
+            musicVolume.value = savedVolume;
+
+            // Save on change
+            musicSelect.onchange = () => {
+                localStorage.setItem('bgMusicTrack', musicSelect.value);
+                window.dispatchEvent(new Event('bgMusicSettingsChanged'));
+            };
+            musicToggle.onchange = () => {
+                localStorage.setItem('bgMusicEnabled', musicToggle.checked);
+                window.dispatchEvent(new Event('bgMusicSettingsChanged'));
+            };
+            musicVolume.oninput = () => {
+                localStorage.setItem('bgMusicVolume', musicVolume.value);
+                window.dispatchEvent(new Event('bgMusicSettingsChanged'));
+            };
+        </script>
+        <script>
+        // Inject music player logic (shared across all pages)
+        (function() {
+            if (window.hasMusicPlayer) return;
+            window.hasMusicPlayer = true;
+            let audio = null;
+            function playMusic() {
+                const enabled = localStorage.getItem('bgMusicEnabled') === 'true';
+                const track = localStorage.getItem('bgMusicTrack') || 'PulseBox - Jazz Walk.mp3';
+                const volume = parseFloat(localStorage.getItem('bgMusicVolume') || '0.5');
+                if (!enabled) {
+                    if (audio) { audio.pause(); audio.currentTime = 0; }
+                    return;
+                }
+                if (!audio) {
+                    audio = new Audio(track);
+                    audio.loop = true;
+                } else if (audio.src.indexOf(track) === -1) {
+                    audio.src = track;
+                }
+                audio.volume = volume;
+                audio.loop = true;
+                audio.play().catch(()=>{});
+            }
+            window.addEventListener('bgMusicSettingsChanged', playMusic);
+            window.addEventListener('storage', playMusic);
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) playMusic();
+            });
+            playMusic();
+        })();
+        </script>
+        </div>
+    </body>
+</html>
